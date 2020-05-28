@@ -1,9 +1,9 @@
 {
-  "name": "che-parser",
+  "name": "che-decoder",
   "version": "0.0.1",
   "main": "dist/index.js",
   "bin": {
-    "che-parse": "./bin/index.js"
+    "che-decode": "./bin/index.js"
   },
   "scripts": {
     "start": "node . ",
