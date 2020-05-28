@@ -14,7 +14,8 @@
     "clean": "rimraf dist/*",
     "lint": "eslint --ignore-path .gitignore --ext .ts .",
     "fix": "yarn lint --fix",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "npm run build"
   },
   "repository": "git@github.com:pandanet-unipro/che-parser.git",
   "author": "511V41 <yukkuri.sinai@gmail.com>",
