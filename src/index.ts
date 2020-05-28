@@ -39,10 +39,14 @@ const machine = (registered: Buffer, id: Buffer, name: Buffer): string => {
     console.error("存在しないOKEが登録されています。");
     process.exit(1);
   }
-  if (isMachineNameInitialValue(name)) {
+  const identifierName = iconv.decode(name, "Shift_JIS");
+  if (
+    isMachineNameInitialValue(name) ||
+    identifierName.replace(/\0/g, "") === ""
+  ) {
     return machineName;
   }
-  return `${machineName} as ${iconv.decode(name, "Shift_JIS")}`;
+  return `${machineName} as ${identifierName}`;
 };
 
 const main = async (): Promise<void> => {
