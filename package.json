@@ -2,6 +2,9 @@
   "name": "che-parser",
   "version": "0.0.1",
   "main": "dist/index.js",
+  "bin": {
+    "che-parse": "./bin/index.js"
+  },
   "scripts": {
     "start": "node . ",
     "build": "parcel build --target node src/index.ts",
@@ -15,7 +18,6 @@
   },
   "repository": "git@github.com:pandanet-unipro/che-parser.git",
   "author": "511V41 <yukkuri.sinai@gmail.com>",
-  "private": true,
   "license": "MIT",
   "devDependencies": {
     "@mysticatea/eslint-plugin": "^13.0.0",

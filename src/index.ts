@@ -4,6 +4,7 @@ import { program } from "commander";
 
 import { version } from "../package.json";
 import map from "./map";
+import machines from "./machines";
 
 program
   .version(version)
@@ -28,51 +29,65 @@ const isMachineNameInitialValue = (buf: Buffer): boolean => {
   return false;
 };
 
-const main = async () => {
+// OKEの名前と識別名を取得する
+const machine = (registered: Buffer, id: Buffer, name: Buffer): string => {
+  if (registered.toString("hex") !== "01") {
+    return "未登録";
+  }
+  const machineName = machines[id.toString("hex")];
+  if (!machineName) {
+    console.error("存在しないOKEが登録されています。");
+    process.exit(1);
+  }
+  if (isMachineNameInitialValue(name)) {
+    return machineName;
+  }
+  return `${machineName} as ${iconv.decode(name, "Shift_JIS")}`;
+};
+
+const main = async (): Promise<void> => {
   const path = program.file;
   const data = await fs.readFile(path).catch(err => {
     console.error("ファイルを読み込めませんでした。", err);
     process.exit(1);
   });
+  if (data.length !== 24512) {
+    console.error("ファイル形式がおかしいです。");
+    process.exit(1);
+  }
   console.info(
+    "チーム名:",
     iconv.decode(deleteCD(data.slice(...map.teamName)), "Shift_JIS")
   );
   console.info(
+    "オーナー名:",
     iconv.decode(deleteCD(data.slice(...map.ownerName)), "Shift_JIS")
   );
 
-  const machineName1 = deleteCD(data.slice(...map.machineName1));
-  if (isMachineNameInitialValue(machineName1)) {
-    console.info("初期値");
-  } else {
-    console.info(iconv.decode(machineName1, "Shift_JIS"));
-  }
-  const machineName2 = deleteCD(data.slice(...map.machineName2));
-  if (isMachineNameInitialValue(machineName2)) {
-    console.info("初期値");
-  } else {
-    const name = iconv
-      .decode(machineName2, "Shift_JIS")
-      .replace(/\0[\s\S]*$/g, "");
-    if (name === "") {
-      console.info("初期値");
-    } else {
-      console.info(name);
-    }
-  }
-  const machineName3 = deleteCD(data.slice(...map.machineName3));
-  if (isMachineNameInitialValue(machineName3)) {
-    console.info("初期値");
-  } else {
-    const name = iconv
-      .decode(machineName3, "Shift_JIS")
-      .replace(/\0[\s\S]*$/g, "");
-    if (name === "") {
-      console.info("初期値");
-    } else {
-      console.info(name);
-    }
-  }
+  console.info(
+    "1:",
+    machine(
+      data.slice(...map.registered1),
+      data.slice(...map.machine1),
+      deleteCD(data.slice(...map.machineName1))
+    )
+  );
+  console.info(
+    "2:",
+    machine(
+      data.slice(...map.registered2),
+      data.slice(...map.machine2),
+      deleteCD(data.slice(...map.machineName2))
+    )
+  );
+  console.info(
+    "3:",
+    machine(
+      data.slice(...map.registered3),
+      data.slice(...map.machine3),
+      deleteCD(data.slice(...map.machineName3))
+    )
+  );
 };
 
 main();
