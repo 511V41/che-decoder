@@ -37,6 +37,7 @@
     "typescript": "^3.7.2"
   },
   "dependencies": {
+    "commander": "^5.1.0",
     "iconv-lite": "^0.5.1"
   }
 }
