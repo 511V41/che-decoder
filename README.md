@@ -17,7 +17,7 @@ npm install -g 511V41/che-parser
 ## 使い方
 
 ```sh
-che-parser -f hoge.che
+che-parse -f hoge.che
 ```
 
 ## Licence

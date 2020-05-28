@@ -19,6 +19,7 @@
   "repository": "git@github.com:pandanet-unipro/che-parser.git",
   "author": "511V41 <yukkuri.sinai@gmail.com>",
   "license": "MIT",
+  "private": true,
   "devDependencies": {
     "@mysticatea/eslint-plugin": "^13.0.0",
     "@types/node": "^12.12.7",
