@@ -2,8 +2,10 @@ import iconv from "iconv-lite";
 import { promises as fs } from "fs";
 import { program } from "commander";
 
+import { version } from "../package.json";
+
 program
-  .version("0.0.1")
+  .version(version)
   .option("-f, --file <path>", "file path")
   .parse(process.argv);
 
