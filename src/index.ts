@@ -47,6 +47,12 @@ const machine = (registered: Buffer, id: Buffer, name: Buffer): string => {
 
 const main = async (): Promise<void> => {
   const path = program.file;
+  if (!path) {
+    console.error(
+      "ファイルパスを指定してください。詳しくは `che-parse -h` で確認できます。"
+    );
+    process.exit(1);
+  }
   const data = await fs.readFile(path).catch(err => {
     console.error("ファイルを読み込めませんでした。", err);
     process.exit(1);
