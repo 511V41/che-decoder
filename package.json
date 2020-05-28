@@ -17,7 +17,7 @@
     "test": "jest",
     "prepare": "npm run build"
   },
-  "repository": "git@github.com:pandanet-unipro/che-parser.git",
+  "repository": "git@github.com:pandanet-unipro/che-decoder.git",
   "author": "511V41 <yukkuri.sinai@gmail.com>",
   "license": "MIT",
   "private": true,
