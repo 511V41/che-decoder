@@ -12,12 +12,17 @@ program
   .parse(process.argv);
 
 // なぜかゴミが入ってることがあるので消す
-const deleteCD = (buf: Buffer): Buffer => {
-  const index = buf.indexOf(0xcd);
+const deleteTrash = (buf: Buffer): Buffer => {
+  let resultBuf = buf;
+  let index = buf.indexOf(0x00);
   if (index !== -1) {
-    return buf.slice(0, index);
+    resultBuf = resultBuf.slice(0, index);
   }
-  return buf;
+  index = resultBuf.indexOf(0xcd);
+  if (index !== -1) {
+    resultBuf = resultBuf.slice(0, index);
+  }
+  return resultBuf;
 };
 
 // 識別名が初期値か？
@@ -67,11 +72,11 @@ const main = async (): Promise<void> => {
   }
   console.info(
     "チーム名:",
-    iconv.decode(deleteCD(data.slice(...map.teamName)), "Shift_JIS")
+    iconv.decode(deleteTrash(data.slice(...map.teamName)), "Shift_JIS")
   );
   console.info(
     "オーナー名:",
-    iconv.decode(deleteCD(data.slice(...map.ownerName)), "Shift_JIS")
+    iconv.decode(deleteTrash(data.slice(...map.ownerName)), "Shift_JIS")
   );
 
   console.info(
@@ -79,7 +84,7 @@ const main = async (): Promise<void> => {
     machine(
       data.slice(...map.registered1),
       data.slice(...map.machine1),
-      deleteCD(data.slice(...map.machineName1))
+      deleteTrash(data.slice(...map.machineName1))
     )
   );
   console.info(
@@ -87,7 +92,7 @@ const main = async (): Promise<void> => {
     machine(
       data.slice(...map.registered2),
       data.slice(...map.machine2),
-      deleteCD(data.slice(...map.machineName2))
+      deleteTrash(data.slice(...map.machineName2))
     )
   );
   console.info(
@@ -95,7 +100,7 @@ const main = async (): Promise<void> => {
     machine(
       data.slice(...map.registered3),
       data.slice(...map.machine3),
-      deleteCD(data.slice(...map.machineName3))
+      deleteTrash(data.slice(...map.machineName3))
     )
   );
 };
