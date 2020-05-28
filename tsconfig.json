@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "commonjs",
+    "sourceMap": true,
+
+    "strict": true,
+
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "resolveJsonModule": true,
+    "outDir": "./dist",
+
+    "typeRoots": ["node_modules/@types", "src/@types"],
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*", "jest.config.js"]
+}
