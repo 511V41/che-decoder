@@ -13,16 +13,11 @@ program
 
 // なぜかゴミが入ってることがあるので消す
 const deleteTrash = (buf: Buffer): Buffer => {
-  let resultBuf = buf;
-  let index = buf.indexOf(0x00);
+  const index = buf.indexOf(0x00);
   if (index !== -1) {
-    resultBuf = resultBuf.slice(0, index);
+    return buf.slice(0, index);
   }
-  /*index = resultBuf.indexOf(0xcd);
-  if (index !== -1) {
-    resultBuf = resultBuf.slice(0, index);
-  }*/
-  return resultBuf;
+  return buf;
 };
 
 // 識別名が初期値か？
@@ -44,7 +39,6 @@ const machine = (registered: Buffer, id: Buffer, name: Buffer): string => {
     console.error("存在しないOKEが登録されています。");
     process.exit(1);
   }
-  console.info(name);
   const identifierName = iconv.decode(name, "Shift_JIS");
   if (
     isMachineNameInitialValue(name) ||
