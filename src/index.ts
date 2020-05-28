@@ -79,30 +79,40 @@ const main = async (): Promise<void> => {
     iconv.decode(deleteTrash(data.slice(...map.ownerName)), "Shift_JIS")
   );
 
-  console.info(
-    "1:",
-    machine(
-      data.slice(...map.registered1),
-      data.slice(...map.machine1),
-      deleteTrash(data.slice(...map.machineName1))
-    )
+  const machine1 = machine(
+    data.slice(...map.registered1),
+    data.slice(...map.machine1),
+    deleteTrash(data.slice(...map.machineName1))
   );
-  console.info(
-    "2:",
-    machine(
-      data.slice(...map.registered2),
-      data.slice(...map.machine2),
-      deleteTrash(data.slice(...map.machineName2))
-    )
+  const machine2 = machine(
+    data.slice(...map.registered2),
+    data.slice(...map.machine2),
+    deleteTrash(data.slice(...map.machineName2))
   );
-  console.info(
-    "3:",
-    machine(
-      data.slice(...map.registered3),
-      data.slice(...map.machine3),
-      deleteTrash(data.slice(...map.machineName3))
-    )
+  const machine3 = machine(
+    data.slice(...map.registered3),
+    data.slice(...map.machine3),
+    deleteTrash(data.slice(...map.machineName3))
   );
+
+  const which = (id: string, index: number) => {
+    if (id === "ff") {
+      console.info(index, "未登録");
+    }
+    if (id.replace(/\0/g, "") === "") {
+      console.info(index, machine1);
+    }
+    if (id === "01") {
+      console.info(index, machine2);
+    }
+    if (id === "02") {
+      console.info(index, machine3);
+    }
+  };
+
+  which(deleteTrash(data.slice(...map.whichMachine1)).toString("hex"), 1);
+  which(deleteTrash(data.slice(...map.whichMachine2)).toString("hex"), 2);
+  which(deleteTrash(data.slice(...map.whichMachine3)).toString("hex"), 3);
 };
 
 main();
