@@ -18,10 +18,10 @@ const deleteTrash = (buf: Buffer): Buffer => {
   if (index !== -1) {
     resultBuf = resultBuf.slice(0, index);
   }
-  index = resultBuf.indexOf(0xcd);
+  /*index = resultBuf.indexOf(0xcd);
   if (index !== -1) {
     resultBuf = resultBuf.slice(0, index);
-  }
+  }*/
   return resultBuf;
 };
 
@@ -44,6 +44,7 @@ const machine = (registered: Buffer, id: Buffer, name: Buffer): string => {
     console.error("存在しないOKEが登録されています。");
     process.exit(1);
   }
+  console.info(name);
   const identifierName = iconv.decode(name, "Shift_JIS");
   if (
     isMachineNameInitialValue(name) ||
