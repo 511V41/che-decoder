@@ -46,6 +46,10 @@ const machine = (registered: Buffer, id: Buffer, name: Buffer): string => {
   ) {
     return machineName;
   }
+  // なぜかmachineNameと一致するidentifierNameが存在する場合がある
+  if (machineName === identifierName) {
+    return machineName;
+  }
   return `${machineName} as ${identifierName}`;
 };
 
