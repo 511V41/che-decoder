@@ -31,7 +31,7 @@ const isMachineNameInitialValue = (buf: Buffer): boolean => {
 
 // OKEの名前と識別名を取得する
 const machine = (registered: Buffer, id: Buffer, name: Buffer): string => {
-  if (Number(registered.toString("hex")) < 1) {
+  if (registered.toString("hex") === "00") {
     return "未登録";
   }
   const machineName = machines[id.toString("hex")];
