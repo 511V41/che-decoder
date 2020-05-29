@@ -90,7 +90,7 @@ const main = async (): Promise<void> => {
     deleteTrash(data.slice(...map.machineName3))
   );
 
-  const which = (id: string, index: number) => {
+  const which = (id: string, index: number): void => {
     if (id === "ff") {
       console.info(index, "未登録");
     }
