@@ -15,6 +15,8 @@ const map = {
   machineName1: [884, 908],
   machineName2: [8756, 8780],
   machineName3: [16628, 16652],
+  // ポジション
+  machinePositions: [740, 788, 836],
   // {1-3}機目がどの機体を登録しているか
   whichMachine1: [736, 737],
   whichMachine2: [784, 785],

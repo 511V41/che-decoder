@@ -8,6 +8,7 @@ import machines from "./machines";
 interface OKE {
   name: string;
   nickname: string;
+  position?: number;
 }
 
 interface Team {
@@ -75,7 +76,7 @@ const main = async (): Promise<void> => {
   const team: Team = {
     name: "",
     owner: "",
-    okes: [undefined, undefined, undefined]
+    okes: new Array(3).fill(undefined)
   };
   const path = program.file;
   if (!path) {
@@ -119,19 +120,27 @@ const main = async (): Promise<void> => {
 
   const which = (id: string, index: number): void => {
     if (id.replace(/\0/g, "") === "") {
-      team.okes[index] = machine1;
+      team.okes[index] = Object.assign({}, machine1);
     }
     if (id === "01") {
-      team.okes[index] = machine2;
+      team.okes[index] = Object.assign({}, machine2);
     }
     if (id === "02") {
-      team.okes[index] = machine3;
+      team.okes[index] = Object.assign({}, machine3);
     }
   };
 
   which(deleteTrash(data.slice(...map.whichMachine1)).toString("hex"), 0);
   which(deleteTrash(data.slice(...map.whichMachine2)).toString("hex"), 1);
   which(deleteTrash(data.slice(...map.whichMachine3)).toString("hex"), 2);
+
+  team.okes = team.okes.map((oke, index): OKE | undefined => {
+    if (oke) {
+      oke.position = data.readUIntBE(map.machinePositions[index], 1);
+    }
+    return oke;
+  });
+
   console.info(JSON.stringify(team, null, "  "));
 };
 
