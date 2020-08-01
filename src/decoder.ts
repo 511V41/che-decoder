@@ -29,6 +29,7 @@ type ColorPalette = ColorPaletteSlot[];
 
 interface Emblem {
   colorPalette: ColorPalette;
+  image: number[];
 }
 
 // なぜかゴミが入ってることがあるので消す
@@ -151,7 +152,7 @@ const main = async (): Promise<void> => {
 
   team.okes = team.okes.map((oke, index): OKE | undefined => {
     if (oke) {
-      oke.position = data.readUIntBE(map.machinePositions[index], 1);
+      oke.position = data[map.machinePositions[index]];
     }
     return oke;
   });
@@ -178,12 +179,29 @@ const main = async (): Promise<void> => {
   })();
 
   if (!isDefault) {
+    const emblem = data.slice(...map.emblem).toString("hex");
+    const cells = [];
+    for (let index = 0; index < emblem.length / 2; index += 1) {
+      cells.push(emblem.substr(index * 2, 2));
+    }
+    const image = cells
+      .map(cell =>
+        cell
+          .split("")
+          .reverse()
+          .join("")
+      )
+      .join("")
+      .split("")
+      .map(cell => Number(cell));
+
     team.emblem = {
-      colorPalette
+      colorPalette,
+      image
     };
   }
 
-  console.info(JSON.stringify(team, null, "  "));
+  console.info(JSON.stringify(team));
 };
 
 export default main;
