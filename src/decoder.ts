@@ -15,6 +15,20 @@ interface Team {
   name: string;
   owner: string;
   okes: (OKE | undefined)[];
+  emblem: Emblem | undefined;
+}
+
+interface ColorPaletteSlot {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}
+
+type ColorPalette = ColorPaletteSlot[];
+
+interface Emblem {
+  colorPalette: ColorPalette;
 }
 
 // なぜかゴミが入ってることがあるので消す
@@ -76,7 +90,8 @@ const main = async (): Promise<void> => {
   const team: Team = {
     name: "",
     owner: "",
-    okes: new Array(3).fill(undefined)
+    okes: new Array(3).fill(undefined),
+    emblem: undefined
   };
   const path = program.file;
   if (!path) {
@@ -140,6 +155,33 @@ const main = async (): Promise<void> => {
     }
     return oke;
   });
+
+  const colorPalette = map.colorPalette.map(p => {
+    const target = data.slice(...p);
+    // RGBは28が初期値です
+    return {
+      r: target[0] - 28,
+      g: target[1] - 28,
+      b: target[2] - 28,
+      a: target[3]
+    };
+  });
+
+  const isDefault = ((): boolean => {
+    for (let index = 0; index < colorPalette.length; index += 1) {
+      const p = colorPalette[index];
+      if (p.r < 0 || p.g < 0 || p.b < 0) {
+        return true;
+      }
+    }
+    return false;
+  })();
+
+  if (!isDefault) {
+    team.emblem = {
+      colorPalette
+    };
+  }
 
   console.info(JSON.stringify(team, null, "  "));
 };
