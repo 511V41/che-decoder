@@ -38,6 +38,8 @@
     "sort-imports": ["error", { "ignoreDeclarationSort": true }],
     "no-console": "off",
     "lines-between-class-members": "off",
-    "no-await-in-loop": "off"
+    "no-await-in-loop": "off",
+    "no-param-reassign": "off",
+    "prefer-object-spread": "off"
   }
 }
